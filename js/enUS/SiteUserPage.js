@@ -51,6 +51,26 @@ function searchSiteUserFilters($formFilters) {
 		if(filterDeleted != null && filterDeleted === true)
 			filters.push({ name: 'fq', value: 'deleted:' + filterDeleted });
 
+		var $filterSeeArchivedCheckbox = $formFilters.find('input.valueSeeArchived[type = "checkbox"]');
+		var $filterSeeArchivedSelect = $formFilters.find('select.valueSeeArchived');
+		var filterSeeArchived = $filterSeeArchivedSelect.length ? $filterSeeArchivedSelect.val() : $filterSeeArchivedCheckbox.prop('checked');
+		var filterSeeArchivedSelectVal = $formFilters.find('select.filterSeeArchived').val();
+		var filterSeeArchived = null;
+		if(filterSeeArchivedSelectVal !== '')
+			filterSeeArchived = filterSeeArchivedSelectVal == 'true';
+		if(filterSeeArchived != null && filterSeeArchived === true)
+			filters.push({ name: 'fq', value: 'seeArchived:' + filterSeeArchived });
+
+		var $filterSeeDeletedCheckbox = $formFilters.find('input.valueSeeDeleted[type = "checkbox"]');
+		var $filterSeeDeletedSelect = $formFilters.find('select.valueSeeDeleted');
+		var filterSeeDeleted = $filterSeeDeletedSelect.length ? $filterSeeDeletedSelect.val() : $filterSeeDeletedCheckbox.prop('checked');
+		var filterSeeDeletedSelectVal = $formFilters.find('select.filterSeeDeleted').val();
+		var filterSeeDeleted = null;
+		if(filterSeeDeletedSelectVal !== '')
+			filterSeeDeleted = filterSeeDeletedSelectVal == 'true';
+		if(filterSeeDeleted != null && filterSeeDeleted === true)
+			filters.push({ name: 'fq', value: 'seeDeleted:' + filterSeeDeleted });
+
 		var filterInheritPk = $formFilters.find('.valueInheritPk').val();
 		if(filterInheritPk != null && filterInheritPk !== '')
 			filters.push({ name: 'fq', value: 'inheritPk:' + filterInheritPk });
@@ -244,6 +264,36 @@ async function patchSiteUser($formFilters, $formValues, pk, success, error) {
 	if(removeDeleted != null && removeDeleted !== '')
 		vals['removeDeleted'] = removeDeleted;
 
+	var valueSeeArchived = $formValues.find('.valueSeeArchived').val();
+	var removeSeeArchived = $formValues.find('.removeSeeArchived').val() === 'true';
+	var valueSeeArchivedSelectVal = $formValues.find('select.setSeeArchived').val();
+	if(valueSeeArchivedSelectVal != null && valueSeeArchivedSelectVal !== '')
+		valueSeeArchived = valueSeeArchivedSelectVal == 'true';
+	var setSeeArchived = removeSeeArchived ? null : valueSeeArchived;
+	var addSeeArchived = $formValues.find('.addSeeArchived').prop('checked');
+	if(removeSeeArchived || setSeeArchived != null && setSeeArchived !== '')
+		vals['setSeeArchived'] = setSeeArchived;
+	if(addSeeArchived != null && addSeeArchived !== '')
+		vals['addSeeArchived'] = addSeeArchived;
+	var removeSeeArchived = $formValues.find('.removeSeeArchived').prop('checked');
+	if(removeSeeArchived != null && removeSeeArchived !== '')
+		vals['removeSeeArchived'] = removeSeeArchived;
+
+	var valueSeeDeleted = $formValues.find('.valueSeeDeleted').val();
+	var removeSeeDeleted = $formValues.find('.removeSeeDeleted').val() === 'true';
+	var valueSeeDeletedSelectVal = $formValues.find('select.setSeeDeleted').val();
+	if(valueSeeDeletedSelectVal != null && valueSeeDeletedSelectVal !== '')
+		valueSeeDeleted = valueSeeDeletedSelectVal == 'true';
+	var setSeeDeleted = removeSeeDeleted ? null : valueSeeDeleted;
+	var addSeeDeleted = $formValues.find('.addSeeDeleted').prop('checked');
+	if(removeSeeDeleted || setSeeDeleted != null && setSeeDeleted !== '')
+		vals['setSeeDeleted'] = setSeeDeleted;
+	if(addSeeDeleted != null && addSeeDeleted !== '')
+		vals['addSeeDeleted'] = addSeeDeleted;
+	var removeSeeDeleted = $formValues.find('.removeSeeDeleted').prop('checked');
+	if(removeSeeDeleted != null && removeSeeDeleted !== '')
+		vals['removeSeeDeleted'] = removeSeeDeleted;
+
 	var valueInheritPk = $formValues.find('.valueInheritPk').val();
 	var removeInheritPk = $formValues.find('.removeInheritPk').val() === 'true';
 	var setInheritPk = removeInheritPk ? null : $formValues.find('.setInheritPk').val();
@@ -408,6 +458,26 @@ function patchSiteUserFilters($formFilters) {
 		if(filterDeleted != null && filterDeleted === true)
 			filters.push({ name: 'fq', value: 'deleted:' + filterDeleted });
 
+		var $filterSeeArchivedCheckbox = $formFilters.find('input.valueSeeArchived[type = "checkbox"]');
+		var $filterSeeArchivedSelect = $formFilters.find('select.valueSeeArchived');
+		var filterSeeArchived = $filterSeeArchivedSelect.length ? $filterSeeArchivedSelect.val() : $filterSeeArchivedCheckbox.prop('checked');
+		var filterSeeArchivedSelectVal = $formFilters.find('select.filterSeeArchived').val();
+		var filterSeeArchived = null;
+		if(filterSeeArchivedSelectVal !== '')
+			filterSeeArchived = filterSeeArchivedSelectVal == 'true';
+		if(filterSeeArchived != null && filterSeeArchived === true)
+			filters.push({ name: 'fq', value: 'seeArchived:' + filterSeeArchived });
+
+		var $filterSeeDeletedCheckbox = $formFilters.find('input.valueSeeDeleted[type = "checkbox"]');
+		var $filterSeeDeletedSelect = $formFilters.find('select.valueSeeDeleted');
+		var filterSeeDeleted = $filterSeeDeletedSelect.length ? $filterSeeDeletedSelect.val() : $filterSeeDeletedCheckbox.prop('checked');
+		var filterSeeDeletedSelectVal = $formFilters.find('select.filterSeeDeleted').val();
+		var filterSeeDeleted = null;
+		if(filterSeeDeletedSelectVal !== '')
+			filterSeeDeleted = filterSeeDeletedSelectVal == 'true';
+		if(filterSeeDeleted != null && filterSeeDeleted === true)
+			filters.push({ name: 'fq', value: 'seeDeleted:' + filterSeeDeleted });
+
 		var filterInheritPk = $formFilters.find('.valueInheritPk').val();
 		if(filterInheritPk != null && filterInheritPk !== '')
 			filters.push({ name: 'fq', value: 'inheritPk:' + filterInheritPk });
@@ -546,6 +616,14 @@ async function postSiteUser($formValues, success, error) {
 	var valueDeleted = $formValues.find('.valueDeleted').val();
 	if(valueDeleted != null && valueDeleted !== '')
 		vals['deleted'] = valueDeleted == 'true';
+
+	var valueSeeArchived = $formValues.find('.valueSeeArchived').val();
+	if(valueSeeArchived != null && valueSeeArchived !== '')
+		vals['seeArchived'] = valueSeeArchived == 'true';
+
+	var valueSeeDeleted = $formValues.find('.valueSeeDeleted').val();
+	if(valueSeeDeleted != null && valueSeeDeleted !== '')
+		vals['seeDeleted'] = valueSeeDeleted == 'true';
 
 	var valueInheritPk = $formValues.find('.valueInheritPk').val();
 	if(valueInheritPk != null && valueInheritPk !== '')
@@ -740,6 +818,30 @@ async function websocketSiteUserInner(apiRequest) {
 						$(this).text(val);
 				});
 				addGlow($('.inputSiteUser' + pk + 'Deleted'));
+			}
+			var val = o['seeArchived'];
+			if(vars.includes('seeArchived')) {
+				$('.inputSiteUser' + pk + 'SeeArchived').each(function() {
+					if(val !== $(this).val())
+						$(this).val(val);
+				});
+				$('.varSiteUser' + pk + 'SeeArchived').each(function() {
+					if(val !== $(this).text())
+						$(this).text(val);
+				});
+				addGlow($('.inputSiteUser' + pk + 'SeeArchived'));
+			}
+			var val = o['seeDeleted'];
+			if(vars.includes('seeDeleted')) {
+				$('.inputSiteUser' + pk + 'SeeDeleted').each(function() {
+					if(val !== $(this).val())
+						$(this).val(val);
+				});
+				$('.varSiteUser' + pk + 'SeeDeleted').each(function() {
+					if(val !== $(this).text())
+						$(this).text(val);
+				});
+				addGlow($('.inputSiteUser' + pk + 'SeeDeleted'));
 			}
 			var val = o['inheritPk'];
 			if(vars.includes('inheritPk')) {
