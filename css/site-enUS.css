@@ -18,6 +18,7 @@ label { font-family: "PT Serif", sans-serif; font-size: 0.9em; }
 dd { display: inline; margin: 0; padding: 0; }
 i { font-weight: normal; }
 body {  }
+ul.w3-bar { padding-left: 0; }
 .menu {display: none; }
 .bgimg {
     background-repeat: no-repeat;

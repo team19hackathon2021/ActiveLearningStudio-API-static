@@ -339,10 +339,6 @@ function searchCurrikiResourceFilters($formFilters) {
 		if(filterInheritPk != null && filterInheritPk !== '')
 			filters.push({ name: 'fq', value: 'inheritPk:' + filterInheritPk });
 
-		var filterId = $formFilters.find('.valueId').val();
-		if(filterId != null && filterId !== '')
-			filters.push({ name: 'fq', value: 'id:' + filterId });
-
 		var filterClassCanonicalName = $formFilters.find('.valueClassCanonicalName').val();
 		if(filterClassCanonicalName != null && filterClassCanonicalName !== '')
 			filters.push({ name: 'fq', value: 'classCanonicalName:' + filterClassCanonicalName });
@@ -350,6 +346,10 @@ function searchCurrikiResourceFilters($formFilters) {
 		var filterClassSimpleName = $formFilters.find('.valueClassSimpleName').val();
 		if(filterClassSimpleName != null && filterClassSimpleName !== '')
 			filters.push({ name: 'fq', value: 'classSimpleName:' + filterClassSimpleName });
+
+		var filterClassCanonicalNames = $formFilters.find('.valueClassCanonicalNames').val();
+		if(filterClassCanonicalNames != null && filterClassCanonicalNames !== '')
+			filters.push({ name: 'fq', value: 'classCanonicalNames:' + filterClassCanonicalNames });
 
 		var filterSessionId = $formFilters.find('.valueSessionId').val();
 		if(filterSessionId != null && filterSessionId !== '')
@@ -382,6 +382,14 @@ function searchCurrikiResourceFilters($formFilters) {
 		var filterPageUrlPk = $formFilters.find('.valuePageUrlPk').val();
 		if(filterPageUrlPk != null && filterPageUrlPk !== '')
 			filters.push({ name: 'fq', value: 'pageUrlPk:' + filterPageUrlPk });
+
+		var filterPageUrlApi = $formFilters.find('.valuePageUrlApi').val();
+		if(filterPageUrlApi != null && filterPageUrlApi !== '')
+			filters.push({ name: 'fq', value: 'pageUrlApi:' + filterPageUrlApi });
+
+		var filterId = $formFilters.find('.valueId').val();
+		if(filterId != null && filterId !== '')
+			filters.push({ name: 'fq', value: 'id:' + filterId });
 	}
 	return filters;
 }
@@ -1804,10 +1812,6 @@ function patchCurrikiResourceFilters($formFilters) {
 		if(filterInheritPk != null && filterInheritPk !== '')
 			filters.push({ name: 'fq', value: 'inheritPk:' + filterInheritPk });
 
-		var filterId = $formFilters.find('.valueId').val();
-		if(filterId != null && filterId !== '')
-			filters.push({ name: 'fq', value: 'id:' + filterId });
-
 		var filterClassCanonicalName = $formFilters.find('.valueClassCanonicalName').val();
 		if(filterClassCanonicalName != null && filterClassCanonicalName !== '')
 			filters.push({ name: 'fq', value: 'classCanonicalName:' + filterClassCanonicalName });
@@ -1815,6 +1819,10 @@ function patchCurrikiResourceFilters($formFilters) {
 		var filterClassSimpleName = $formFilters.find('.valueClassSimpleName').val();
 		if(filterClassSimpleName != null && filterClassSimpleName !== '')
 			filters.push({ name: 'fq', value: 'classSimpleName:' + filterClassSimpleName });
+
+		var filterClassCanonicalNames = $formFilters.find('.valueClassCanonicalNames').val();
+		if(filterClassCanonicalNames != null && filterClassCanonicalNames !== '')
+			filters.push({ name: 'fq', value: 'classCanonicalNames:' + filterClassCanonicalNames });
 
 		var filterSessionId = $formFilters.find('.valueSessionId').val();
 		if(filterSessionId != null && filterSessionId !== '')
@@ -1847,6 +1855,14 @@ function patchCurrikiResourceFilters($formFilters) {
 		var filterPageUrlPk = $formFilters.find('.valuePageUrlPk').val();
 		if(filterPageUrlPk != null && filterPageUrlPk !== '')
 			filters.push({ name: 'fq', value: 'pageUrlPk:' + filterPageUrlPk });
+
+		var filterPageUrlApi = $formFilters.find('.valuePageUrlApi').val();
+		if(filterPageUrlApi != null && filterPageUrlApi !== '')
+			filters.push({ name: 'fq', value: 'pageUrlApi:' + filterPageUrlApi });
+
+		var filterId = $formFilters.find('.valueId').val();
+		if(filterId != null && filterId !== '')
+			filters.push({ name: 'fq', value: 'id:' + filterId });
 	}
 	return filters;
 }
@@ -2282,6 +2298,7 @@ async function websocketCurrikiResource(success) {
 	window.eventBus.onopen = function () {
 
 		window.eventBus.registerHandler('websocketCurrikiResource', function (error, message) {
+			searchPage();
 			var json = JSON.parse(message['body']);
 			var id = json['id'];
 			var pk = json['pk'];
@@ -3310,11 +3327,6 @@ async function websocketCurrikiResourceInner(apiRequest) {
 				addGlow($('.inputCurrikiResource' + pk + 'ApprovalStatus'));
 			}
 			var val = o['approvalStatusDate'];
-			if(val != null) {
-				var t = moment(val, 'YYYY-MM-DD');
-				if(t)
-					val = t.format('MM/DD/YYYY');
-			}
 			if(vars.includes('approvalStatusDate')) {
 				$('.inputCurrikiResource' + pk + 'ApprovalStatusDate').each(function() {
 					if(val !== $(this).val())
@@ -3350,18 +3362,6 @@ async function websocketCurrikiResourceInner(apiRequest) {
 				});
 				addGlow($('.inputCurrikiResource' + pk + 'InheritPk'));
 			}
-			var val = o['id'];
-			if(vars.includes('id')) {
-				$('.inputCurrikiResource' + pk + 'Id').each(function() {
-					if(val !== $(this).val())
-						$(this).val(val);
-				});
-				$('.varCurrikiResource' + pk + 'Id').each(function() {
-					if(val !== $(this).text())
-						$(this).text(val);
-				});
-				addGlow($('.inputCurrikiResource' + pk + 'Id'));
-			}
 			var val = o['classCanonicalName'];
 			if(vars.includes('classCanonicalName')) {
 				$('.inputCurrikiResource' + pk + 'ClassCanonicalName').each(function() {
@@ -3385,6 +3385,18 @@ async function websocketCurrikiResourceInner(apiRequest) {
 						$(this).text(val);
 				});
 				addGlow($('.inputCurrikiResource' + pk + 'ClassSimpleName'));
+			}
+			var val = o['classCanonicalNames'];
+			if(vars.includes('classCanonicalNames')) {
+				$('.inputCurrikiResource' + pk + 'ClassCanonicalNames').each(function() {
+					if(val !== $(this).val())
+						$(this).val(val);
+				});
+				$('.varCurrikiResource' + pk + 'ClassCanonicalNames').each(function() {
+					if(val !== $(this).text())
+						$(this).text(val);
+				});
+				addGlow($('.inputCurrikiResource' + pk + 'ClassCanonicalNames'));
 			}
 			var val = o['sessionId'];
 			if(vars.includes('sessionId')) {
@@ -3482,6 +3494,112 @@ async function websocketCurrikiResourceInner(apiRequest) {
 				});
 				addGlow($('.inputCurrikiResource' + pk + 'PageUrlPk'));
 			}
+			var val = o['pageUrlApi'];
+			if(vars.includes('pageUrlApi')) {
+				$('.inputCurrikiResource' + pk + 'PageUrlApi').each(function() {
+					if(val !== $(this).val())
+						$(this).val(val);
+				});
+				$('.varCurrikiResource' + pk + 'PageUrlApi').each(function() {
+					if(val !== $(this).text())
+						$(this).text(val);
+				});
+				addGlow($('.inputCurrikiResource' + pk + 'PageUrlApi'));
+			}
+			var val = o['id'];
+			if(vars.includes('id')) {
+				$('.inputCurrikiResource' + pk + 'Id').each(function() {
+					if(val !== $(this).val())
+						$(this).val(val);
+				});
+				$('.varCurrikiResource' + pk + 'Id').each(function() {
+					if(val !== $(this).text())
+						$(this).text(val);
+				});
+				addGlow($('.inputCurrikiResource' + pk + 'Id'));
+			}
 		});
+	}
+}
+
+function pageGraph(apiRequest) {
+	var json = JSON.parse($('.pageForm .pageResponse').val());
+	if(json['facetCounts']) {
+		var facetCounts = json.facetCounts;
+		if(facetCounts['facetPivot'] && facetCounts['facetRanges']) {
+			var numPivots = json.responseHeader.params['facet.pivot'].split(',').length;
+			var range = facetCounts.facetRanges.ranges[Object.keys(facetCounts.facetRanges.ranges)[0]];
+			var rangeName = range.name;
+			var rangeVar = rangeName.substring(0, rangeName.indexOf('_'));
+			var rangeVarFq = window.varsFq[rangeVar];
+			var rangeCounts = range.counts;
+			var rangeVals = Object.keys(rangeCounts).map(key => key.substring(0, 10));
+			var pivot1Name = Object.keys(facetCounts.facetPivot.pivotMap)[0];
+			var pivot1VarIndexed = pivot1Name;
+			if(pivot1VarIndexed.includes(','))
+				pivot1VarIndexed = pivot1VarIndexed.substring(0, pivot1VarIndexed.indexOf(','));
+			var pivot1Var = pivot1VarIndexed.substring(0, pivot1VarIndexed.indexOf('_'));
+			var pivot1VarFq = window.varsFq[pivot1Var];
+			var pivot1Map = facetCounts.facetPivot.pivotMap[pivot1Name].pivotMap;
+			var pivot1Vals = Object.keys(pivot1Map);
+			var data = [];
+			var layout = {};
+			if(pivot1VarFq.classSimpleName === 'Point') {
+				layout['dragmode'] = 'zoom';
+				layout['mapbox'] = { style: 'open-street-map' };
+				layout['margin'] = { r: 0, t: 0, b: 0, l: 0 };
+				var trace = {};
+				trace['type'] = 'scattermapbox';
+				trace['marker'] = { color: 'fuchsia', size: 6 };
+				var lat = [];
+				var lon = [];
+				var text = [];
+				var customdata = [];
+				trace['lat'] = lat;
+				trace['lon'] = lon;
+				trace['text'] = text;
+				trace['customdata'] = customdata;
+				json.response.docs.forEach((record) => {
+					var location = record.fields[pivot1VarIndexed];
+					if(location) {
+						var locationParts = location.split(',');
+						text.push('pivot1Val');
+						lat.push(parseFloat(locationParts[0]));
+						lon.push(parseFloat(locationParts[1]));
+						var vals = {};
+						var hovertemplate = '';
+						Object.entries(window.varsFq).forEach(([key, data]) => {
+							if(data.displayName) {
+								vals[data.var] = record.fields[data.varStored];
+								hovertemplate += '<b>' + data.displayName + ': %{customdata.' + data.var + '}</b><br>';
+							}
+							customdata.push(vals);
+						});
+						customdata.push(vals);
+						trace['hovertemplate'] = hovertemplate;
+					}
+				});
+				data.push(trace);
+			} else {
+				layout['title'] = 'CurrikiResource';
+				layout['xaxis'] = {
+					title: rangeVarFq.displayName
+				}
+				layout['yaxis'] = {
+					title: pivot1VarFq.displayName
+				}
+				pivot1Vals.forEach((pivot1Val) => {
+					var pivot1 = pivot1Map[pivot1Val];
+					var pivot1Counts = pivot1.ranges[rangeName].counts;
+					var trace = {};
+					trace['x'] = Object.keys(pivot1Counts).map(key => key.substring(0, 10));
+					trace['y'] = Object.values(pivot1Counts);
+					trace['mode'] = 'lines+markers';
+					trace['name'] = pivot1Val;
+					data.push(trace);
+				});
+			}
+			Plotly.newPlot('htmBodyGraphBaseModelPage', data, layout);
+		}
 	}
 }
