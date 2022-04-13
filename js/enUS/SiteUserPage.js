@@ -71,14 +71,6 @@ function searchSiteUserFilters($formFilters) {
 		if(filterSeeDeleted != null && filterSeeDeleted === true)
 			filters.push({ name: 'fq', value: 'seeDeleted:' + filterSeeDeleted });
 
-		var filterInheritPk = $formFilters.find('.valueInheritPk').val();
-		if(filterInheritPk != null && filterInheritPk !== '')
-			filters.push({ name: 'fq', value: 'inheritPk:' + filterInheritPk });
-
-		var filterClassCanonicalName = $formFilters.find('.valueClassCanonicalName').val();
-		if(filterClassCanonicalName != null && filterClassCanonicalName !== '')
-			filters.push({ name: 'fq', value: 'classCanonicalName:' + filterClassCanonicalName });
-
 		var filterClassSimpleName = $formFilters.find('.valueClassSimpleName').val();
 		if(filterClassSimpleName != null && filterClassSimpleName !== '')
 			filters.push({ name: 'fq', value: 'classSimpleName:' + filterClassSimpleName });
@@ -126,6 +118,14 @@ function searchSiteUserFilters($formFilters) {
 		var filterId = $formFilters.find('.valueId').val();
 		if(filterId != null && filterId !== '')
 			filters.push({ name: 'fq', value: 'id:' + filterId });
+
+		var filterInheritPk = $formFilters.find('.valueInheritPk').val();
+		if(filterInheritPk != null && filterInheritPk !== '')
+			filters.push({ name: 'fq', value: 'inheritPk:' + filterInheritPk });
+
+		var filterClassCanonicalName = $formFilters.find('.valueClassCanonicalName').val();
+		if(filterClassCanonicalName != null && filterClassCanonicalName !== '')
+			filters.push({ name: 'fq', value: 'classCanonicalName:' + filterClassCanonicalName });
 
 		var filterUserKeys = $formFilters.find('.valueUserKeys').val();
 		if(filterUserKeys != null && filterUserKeys !== '')
@@ -302,18 +302,6 @@ async function patchSiteUser($formFilters, $formValues, pk, success, error) {
 	if(removeSeeDeleted != null && removeSeeDeleted !== '')
 		vals['removeSeeDeleted'] = removeSeeDeleted;
 
-	var valueInheritPk = $formValues.find('.valueInheritPk').val();
-	var removeInheritPk = $formValues.find('.removeInheritPk').val() === 'true';
-	var setInheritPk = removeInheritPk ? null : $formValues.find('.setInheritPk').val();
-	var addInheritPk = $formValues.find('.addInheritPk').val();
-	if(removeInheritPk || setInheritPk != null && setInheritPk !== '')
-		vals['setInheritPk'] = setInheritPk;
-	if(addInheritPk != null && addInheritPk !== '')
-		vals['addInheritPk'] = addInheritPk;
-	var removeInheritPk = $formValues.find('.removeInheritPk').val();
-	if(removeInheritPk != null && removeInheritPk !== '')
-		vals['removeInheritPk'] = removeInheritPk;
-
 	var valueSessionId = $formValues.find('.valueSessionId').val();
 	var removeSessionId = $formValues.find('.removeSessionId').val() === 'true';
 	var setSessionId = removeSessionId ? null : $formValues.find('.setSessionId').val();
@@ -349,6 +337,18 @@ async function patchSiteUser($formFilters, $formValues, pk, success, error) {
 	var removeObjectTitle = $formValues.find('.removeObjectTitle').val();
 	if(removeObjectTitle != null && removeObjectTitle !== '')
 		vals['removeObjectTitle'] = removeObjectTitle;
+
+	var valueInheritPk = $formValues.find('.valueInheritPk').val();
+	var removeInheritPk = $formValues.find('.removeInheritPk').val() === 'true';
+	var setInheritPk = removeInheritPk ? null : $formValues.find('.setInheritPk').val();
+	var addInheritPk = $formValues.find('.addInheritPk').val();
+	if(removeInheritPk || setInheritPk != null && setInheritPk !== '')
+		vals['setInheritPk'] = setInheritPk;
+	if(addInheritPk != null && addInheritPk !== '')
+		vals['addInheritPk'] = addInheritPk;
+	var removeInheritPk = $formValues.find('.removeInheritPk').val();
+	if(removeInheritPk != null && removeInheritPk !== '')
+		vals['removeInheritPk'] = removeInheritPk;
 
 	var valueUserId = $formValues.find('.valueUserId').val();
 	var removeUserId = $formValues.find('.removeUserId').val() === 'true';
@@ -486,14 +486,6 @@ function patchSiteUserFilters($formFilters) {
 		if(filterSeeDeleted != null && filterSeeDeleted === true)
 			filters.push({ name: 'fq', value: 'seeDeleted:' + filterSeeDeleted });
 
-		var filterInheritPk = $formFilters.find('.valueInheritPk').val();
-		if(filterInheritPk != null && filterInheritPk !== '')
-			filters.push({ name: 'fq', value: 'inheritPk:' + filterInheritPk });
-
-		var filterClassCanonicalName = $formFilters.find('.valueClassCanonicalName').val();
-		if(filterClassCanonicalName != null && filterClassCanonicalName !== '')
-			filters.push({ name: 'fq', value: 'classCanonicalName:' + filterClassCanonicalName });
-
 		var filterClassSimpleName = $formFilters.find('.valueClassSimpleName').val();
 		if(filterClassSimpleName != null && filterClassSimpleName !== '')
 			filters.push({ name: 'fq', value: 'classSimpleName:' + filterClassSimpleName });
@@ -541,6 +533,14 @@ function patchSiteUserFilters($formFilters) {
 		var filterId = $formFilters.find('.valueId').val();
 		if(filterId != null && filterId !== '')
 			filters.push({ name: 'fq', value: 'id:' + filterId });
+
+		var filterInheritPk = $formFilters.find('.valueInheritPk').val();
+		if(filterInheritPk != null && filterInheritPk !== '')
+			filters.push({ name: 'fq', value: 'inheritPk:' + filterInheritPk });
+
+		var filterClassCanonicalName = $formFilters.find('.valueClassCanonicalName').val();
+		if(filterClassCanonicalName != null && filterClassCanonicalName !== '')
+			filters.push({ name: 'fq', value: 'classCanonicalName:' + filterClassCanonicalName });
 
 		var filterUserKeys = $formFilters.find('.valueUserKeys').val();
 		if(filterUserKeys != null && filterUserKeys !== '')
@@ -641,10 +641,6 @@ async function postSiteUser($formValues, success, error) {
 	if(valueSeeDeleted != null && valueSeeDeleted !== '')
 		vals['seeDeleted'] = valueSeeDeleted == 'true';
 
-	var valueInheritPk = $formValues.find('.valueInheritPk').val();
-	if(valueInheritPk != null && valueInheritPk !== '')
-		vals['inheritPk'] = valueInheritPk;
-
 	var valueSessionId = $formValues.find('.valueSessionId').val();
 	if(valueSessionId != null && valueSessionId !== '')
 		vals['sessionId'] = valueSessionId;
@@ -656,6 +652,10 @@ async function postSiteUser($formValues, success, error) {
 	var valueObjectTitle = $formValues.find('.valueObjectTitle').val();
 	if(valueObjectTitle != null && valueObjectTitle !== '')
 		vals['objectTitle'] = valueObjectTitle;
+
+	var valueInheritPk = $formValues.find('.valueInheritPk').val();
+	if(valueInheritPk != null && valueInheritPk !== '')
+		vals['inheritPk'] = valueInheritPk;
 
 	var valueUserId = $formValues.find('.valueUserId').val();
 	if(valueUserId != null && valueUserId !== '')
@@ -699,6 +699,26 @@ function postSiteUserVals(vals, success, error) {
 		, type: 'POST'
 		, contentType: 'application/json; charset=utf-8'
 		, data: JSON.stringify(vals)
+		, success: success
+		, error: error
+	});
+}
+
+// PUTImport //
+
+async function putimportSiteUser($formValues, pk, success, error) {
+	var json = $formValues.find('.PUTImport_searchList').val();
+	if(json != null && json !== '')
+		putimportSiteUserVals(JSON.parse(json), success, error);
+}
+
+function putimportSiteUserVals(json, success, error) {
+	$.ajax({
+		url: '/api/user/import'
+		, dataType: 'json'
+		, type: 'PUT'
+		, contentType: 'application/json; charset=utf-8'
+		, data: JSON.stringify(json)
 		, success: success
 		, error: error
 	});
@@ -860,30 +880,6 @@ async function websocketSiteUserInner(apiRequest) {
 				});
 				addGlow($('.inputSiteUser' + pk + 'SeeDeleted'));
 			}
-			var val = o['inheritPk'];
-			if(vars.includes('inheritPk')) {
-				$('.inputSiteUser' + pk + 'InheritPk').each(function() {
-					if(val !== $(this).val())
-						$(this).val(val);
-				});
-				$('.varSiteUser' + pk + 'InheritPk').each(function() {
-					if(val !== $(this).text())
-						$(this).text(val);
-				});
-				addGlow($('.inputSiteUser' + pk + 'InheritPk'));
-			}
-			var val = o['classCanonicalName'];
-			if(vars.includes('classCanonicalName')) {
-				$('.inputSiteUser' + pk + 'ClassCanonicalName').each(function() {
-					if(val !== $(this).val())
-						$(this).val(val);
-				});
-				$('.varSiteUser' + pk + 'ClassCanonicalName').each(function() {
-					if(val !== $(this).text())
-						$(this).text(val);
-				});
-				addGlow($('.inputSiteUser' + pk + 'ClassCanonicalName'));
-			}
 			var val = o['classSimpleName'];
 			if(vars.includes('classSimpleName')) {
 				$('.inputSiteUser' + pk + 'ClassSimpleName').each(function() {
@@ -1027,6 +1023,30 @@ async function websocketSiteUserInner(apiRequest) {
 						$(this).text(val);
 				});
 				addGlow($('.inputSiteUser' + pk + 'Id'));
+			}
+			var val = o['inheritPk'];
+			if(vars.includes('inheritPk')) {
+				$('.inputSiteUser' + pk + 'InheritPk').each(function() {
+					if(val !== $(this).val())
+						$(this).val(val);
+				});
+				$('.varSiteUser' + pk + 'InheritPk').each(function() {
+					if(val !== $(this).text())
+						$(this).text(val);
+				});
+				addGlow($('.inputSiteUser' + pk + 'InheritPk'));
+			}
+			var val = o['classCanonicalName'];
+			if(vars.includes('classCanonicalName')) {
+				$('.inputSiteUser' + pk + 'ClassCanonicalName').each(function() {
+					if(val !== $(this).val())
+						$(this).val(val);
+				});
+				$('.varSiteUser' + pk + 'ClassCanonicalName').each(function() {
+					if(val !== $(this).text())
+						$(this).text(val);
+				});
+				addGlow($('.inputSiteUser' + pk + 'ClassCanonicalName'));
 			}
 			var val = o['userKeys'];
 			if(vars.includes('userKeys')) {

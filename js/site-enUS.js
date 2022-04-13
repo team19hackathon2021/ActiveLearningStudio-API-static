@@ -1,3 +1,8 @@
+
+//////////
+// site //
+//////////
+
 $(window).on('load', function() {
     $(document).click(function(e) {
             var $target = $(e.target);
@@ -6,6 +11,103 @@ $(window).on('load', function() {
             }
     });
 });
+
+function qChange(elem) {
+	var $elem = $(elem);
+	if($elem.val())
+		$elem.next().text("q=" + $elem.attr('data-var') + ":" + encodeURIComponent($elem.val()));
+	else
+		$elem.next().text("");
+	searchPage();
+}
+
+function fqChange(elem) {
+	var $elem = $(elem);
+	if($elem.val())
+		$("#pageSearchVal-" + $(elem).attr("id")).text("fq=" + $elem.attr('data-var') + ":" + encodeURIComponent($elem.val()));
+	else
+		$("#pageSearchVal-" + $(elem).attr("id")).text("");
+	searchPage();
+}
+
+function facetFieldChange(elem) {
+	var $elem = $(elem);
+	if($elem.attr("data-clear") === "false") {
+		$("#pageSearchVal-" + $(elem).attr("id")).text("facet.field=" + $elem.attr('data-var'));
+		$elem.attr("data-clear", "true");
+	} else {
+		$("#pageSearchVal-" + $(elem).attr("id")).text("");
+		$elem.attr("data-clear", "false");
+	}
+	searchPage();
+}
+
+function facetRangeChange(elem, classSimpleName) {
+	facetRangeVal = $("input[name='pageFacetRange']:checked").val();
+	if(facetRangeVal) {
+		var timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+		$("#pageSearchVal-pageFacetRangeGap-" + classSimpleName).text("facet.range.gap=" + encodeURIComponent($("#pageFacetRangeGap-" + classSimpleName).val()));
+		$("#pageSearchVal-pageFacetRangeStart-" + classSimpleName).text("facet.range.start=" + encodeURIComponent($("#pageFacetRangeStart-" + classSimpleName).val() + ":00.000[" + timeZone + "]"));
+		$("#pageSearchVal-pageFacetRangeEnd-" + classSimpleName).text("facet.range.end=" + encodeURIComponent($("#pageFacetRangeEnd-" + classSimpleName).val() + ":00.000[" + timeZone + "]"));
+		$("#pageSearchVal-pageFacetRangeVar-" + classSimpleName).text("facet.range={!tag=r1}" + encodeURIComponent(facetRangeVal));
+	} else {
+		$("#pageSearchVal-pageFacetRangeGap-" + classSimpleName).text("");
+		$("#pageSearchVal-pageFacetRangeStart-" + classSimpleName).text("");
+		$("#pageSearchVal-pageFacetRangeEnd-" + classSimpleName).text("");
+		$("#pageSearchVal-pageFacetRangeVar-" + classSimpleName).text("");
+	}
+	searchPage();
+}
+
+function facetPivotChange(elem, classSimpleName) {
+	var $elem = $(elem);
+	var $list = $("#pageSearchVal-hidden" + classSimpleName);
+	if($elem.is(":checked")) {
+		$list.append($("<div>")
+				.attr("id", "pageSearchVal-hidden" + classSimpleName + "_" + $elem.val())
+				.attr("class", "pageSearchVal pageSearchVal-hidden" + classSimpleName + " ")
+				.text("facet.pivot={!range=r1}" + $elem.val())
+				)
+				;
+	} else {
+		$("#pageSearchVal-hidden" + classSimpleName + "_" + $elem.val()).remove();
+	}
+	searchPage();
+}
+
+function searchPage() {
+	var queryParams = "?" + $(".pageSearchVal").get().filter(elem => elem.innerText.length > 0).map(elem => elem.innerText).join("&");
+	var uri = location.pathname + queryParams;
+	$.get(uri, {}, function(data) {
+		var $response = $("<html/>").html(data);
+		$(".pageContent").replaceWith($response.find(".pageContent"));
+		$('.pageFacetField').each(function(index, facetField) {
+			var $facetField = $(facetField);
+			$facetField.replaceWith($response.find("#" + $facetField.attr("id")));
+		});
+		pageGraph();
+	}, 'html');
+	window.history.replaceState('', '', uri);
+}
+
+function searchEscapeQueryChars(s) {
+	var sb = "";
+	for (let i = 0; i < s.length; i++) {
+		var c = s[i];
+		// These characters are part of the query syntax and must be escaped
+		if (c == '\\' || c == '+' || c == '-' || c == '!' || c == '(' || c == ')' || c == ':' || c == '^'
+				|| c == '[' || c == ']' || c == '\"' || c == '{' || c == '}' || c == '~' || c == '*' || c == '?'
+				|| c == '|' || c == '&' || c == ';' || c == '/' || /\s/.test(c)) {
+			sb += '\\';
+		}
+		sb += c;
+	}
+	return sb;
+}
+
+///////////
+// other //
+///////////
 
 $(document).keypress(function(e) {
     if (e.keyCode == 27) {

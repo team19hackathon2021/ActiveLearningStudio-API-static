@@ -335,14 +335,6 @@ function searchCurrikiResourceFilters($formFilters) {
 		if(filterSpamUser != null && filterSpamUser !== '')
 			filters.push({ name: 'fq', value: 'spamUser:' + filterSpamUser });
 
-		var filterInheritPk = $formFilters.find('.valueInheritPk').val();
-		if(filterInheritPk != null && filterInheritPk !== '')
-			filters.push({ name: 'fq', value: 'inheritPk:' + filterInheritPk });
-
-		var filterClassCanonicalName = $formFilters.find('.valueClassCanonicalName').val();
-		if(filterClassCanonicalName != null && filterClassCanonicalName !== '')
-			filters.push({ name: 'fq', value: 'classCanonicalName:' + filterClassCanonicalName });
-
 		var filterClassSimpleName = $formFilters.find('.valueClassSimpleName').val();
 		if(filterClassSimpleName != null && filterClassSimpleName !== '')
 			filters.push({ name: 'fq', value: 'classSimpleName:' + filterClassSimpleName });
@@ -390,6 +382,14 @@ function searchCurrikiResourceFilters($formFilters) {
 		var filterId = $formFilters.find('.valueId').val();
 		if(filterId != null && filterId !== '')
 			filters.push({ name: 'fq', value: 'id:' + filterId });
+
+		var filterInheritPk = $formFilters.find('.valueInheritPk').val();
+		if(filterInheritPk != null && filterInheritPk !== '')
+			filters.push({ name: 'fq', value: 'inheritPk:' + filterInheritPk });
+
+		var filterClassCanonicalName = $formFilters.find('.valueClassCanonicalName').val();
+		if(filterClassCanonicalName != null && filterClassCanonicalName !== '')
+			filters.push({ name: 'fq', value: 'classCanonicalName:' + filterClassCanonicalName });
 	}
 	return filters;
 }
@@ -1432,18 +1432,6 @@ async function patchCurrikiResource($formFilters, $formValues, pk, success, erro
 	if(removeSpamUser != null && removeSpamUser !== '')
 		vals['removeSpamUser'] = removeSpamUser;
 
-	var valueInheritPk = $formValues.find('.valueInheritPk').val();
-	var removeInheritPk = $formValues.find('.removeInheritPk').val() === 'true';
-	var setInheritPk = removeInheritPk ? null : $formValues.find('.setInheritPk').val();
-	var addInheritPk = $formValues.find('.addInheritPk').val();
-	if(removeInheritPk || setInheritPk != null && setInheritPk !== '')
-		vals['setInheritPk'] = setInheritPk;
-	if(addInheritPk != null && addInheritPk !== '')
-		vals['addInheritPk'] = addInheritPk;
-	var removeInheritPk = $formValues.find('.removeInheritPk').val();
-	if(removeInheritPk != null && removeInheritPk !== '')
-		vals['removeInheritPk'] = removeInheritPk;
-
 	var valueSessionId = $formValues.find('.valueSessionId').val();
 	var removeSessionId = $formValues.find('.removeSessionId').val() === 'true';
 	var setSessionId = removeSessionId ? null : $formValues.find('.setSessionId').val();
@@ -1479,6 +1467,18 @@ async function patchCurrikiResource($formFilters, $formValues, pk, success, erro
 	var removeObjectTitle = $formValues.find('.removeObjectTitle').val();
 	if(removeObjectTitle != null && removeObjectTitle !== '')
 		vals['removeObjectTitle'] = removeObjectTitle;
+
+	var valueInheritPk = $formValues.find('.valueInheritPk').val();
+	var removeInheritPk = $formValues.find('.removeInheritPk').val() === 'true';
+	var setInheritPk = removeInheritPk ? null : $formValues.find('.setInheritPk').val();
+	var addInheritPk = $formValues.find('.addInheritPk').val();
+	if(removeInheritPk || setInheritPk != null && setInheritPk !== '')
+		vals['setInheritPk'] = setInheritPk;
+	if(addInheritPk != null && addInheritPk !== '')
+		vals['addInheritPk'] = addInheritPk;
+	var removeInheritPk = $formValues.find('.removeInheritPk').val();
+	if(removeInheritPk != null && removeInheritPk !== '')
+		vals['removeInheritPk'] = removeInheritPk;
 
 	patchCurrikiResourceVals(pk == null ? $.deparam(window.location.search ? window.location.search.substring(1) : window.location.search) : [{name:'fq', value:'pk:' + pk}], vals, success, error);
 }
@@ -1808,14 +1808,6 @@ function patchCurrikiResourceFilters($formFilters) {
 		if(filterSpamUser != null && filterSpamUser !== '')
 			filters.push({ name: 'fq', value: 'spamUser:' + filterSpamUser });
 
-		var filterInheritPk = $formFilters.find('.valueInheritPk').val();
-		if(filterInheritPk != null && filterInheritPk !== '')
-			filters.push({ name: 'fq', value: 'inheritPk:' + filterInheritPk });
-
-		var filterClassCanonicalName = $formFilters.find('.valueClassCanonicalName').val();
-		if(filterClassCanonicalName != null && filterClassCanonicalName !== '')
-			filters.push({ name: 'fq', value: 'classCanonicalName:' + filterClassCanonicalName });
-
 		var filterClassSimpleName = $formFilters.find('.valueClassSimpleName').val();
 		if(filterClassSimpleName != null && filterClassSimpleName !== '')
 			filters.push({ name: 'fq', value: 'classSimpleName:' + filterClassSimpleName });
@@ -1863,6 +1855,14 @@ function patchCurrikiResourceFilters($formFilters) {
 		var filterId = $formFilters.find('.valueId').val();
 		if(filterId != null && filterId !== '')
 			filters.push({ name: 'fq', value: 'id:' + filterId });
+
+		var filterInheritPk = $formFilters.find('.valueInheritPk').val();
+		if(filterInheritPk != null && filterInheritPk !== '')
+			filters.push({ name: 'fq', value: 'inheritPk:' + filterInheritPk });
+
+		var filterClassCanonicalName = $formFilters.find('.valueClassCanonicalName').val();
+		if(filterClassCanonicalName != null && filterClassCanonicalName !== '')
+			filters.push({ name: 'fq', value: 'classCanonicalName:' + filterClassCanonicalName });
 	}
 	return filters;
 }
@@ -2235,10 +2235,6 @@ async function postCurrikiResource($formValues, success, error) {
 	if(valueSpamUser != null && valueSpamUser !== '')
 		vals['spamUser'] = valueSpamUser;
 
-	var valueInheritPk = $formValues.find('.valueInheritPk').val();
-	if(valueInheritPk != null && valueInheritPk !== '')
-		vals['inheritPk'] = valueInheritPk;
-
 	var valueSessionId = $formValues.find('.valueSessionId').val();
 	if(valueSessionId != null && valueSessionId !== '')
 		vals['sessionId'] = valueSessionId;
@@ -2250,6 +2246,10 @@ async function postCurrikiResource($formValues, success, error) {
 	var valueObjectTitle = $formValues.find('.valueObjectTitle').val();
 	if(valueObjectTitle != null && valueObjectTitle !== '')
 		vals['objectTitle'] = valueObjectTitle;
+
+	var valueInheritPk = $formValues.find('.valueInheritPk').val();
+	if(valueInheritPk != null && valueInheritPk !== '')
+		vals['inheritPk'] = valueInheritPk;
 
 	$.ajax({
 		url: '/api/resource'
@@ -3350,30 +3350,6 @@ async function websocketCurrikiResourceInner(apiRequest) {
 				});
 				addGlow($('.inputCurrikiResource' + pk + 'SpamUser'));
 			}
-			var val = o['inheritPk'];
-			if(vars.includes('inheritPk')) {
-				$('.inputCurrikiResource' + pk + 'InheritPk').each(function() {
-					if(val !== $(this).val())
-						$(this).val(val);
-				});
-				$('.varCurrikiResource' + pk + 'InheritPk').each(function() {
-					if(val !== $(this).text())
-						$(this).text(val);
-				});
-				addGlow($('.inputCurrikiResource' + pk + 'InheritPk'));
-			}
-			var val = o['classCanonicalName'];
-			if(vars.includes('classCanonicalName')) {
-				$('.inputCurrikiResource' + pk + 'ClassCanonicalName').each(function() {
-					if(val !== $(this).val())
-						$(this).val(val);
-				});
-				$('.varCurrikiResource' + pk + 'ClassCanonicalName').each(function() {
-					if(val !== $(this).text())
-						$(this).text(val);
-				});
-				addGlow($('.inputCurrikiResource' + pk + 'ClassCanonicalName'));
-			}
 			var val = o['classSimpleName'];
 			if(vars.includes('classSimpleName')) {
 				$('.inputCurrikiResource' + pk + 'ClassSimpleName').each(function() {
@@ -3517,6 +3493,30 @@ async function websocketCurrikiResourceInner(apiRequest) {
 						$(this).text(val);
 				});
 				addGlow($('.inputCurrikiResource' + pk + 'Id'));
+			}
+			var val = o['inheritPk'];
+			if(vars.includes('inheritPk')) {
+				$('.inputCurrikiResource' + pk + 'InheritPk').each(function() {
+					if(val !== $(this).val())
+						$(this).val(val);
+				});
+				$('.varCurrikiResource' + pk + 'InheritPk').each(function() {
+					if(val !== $(this).text())
+						$(this).text(val);
+				});
+				addGlow($('.inputCurrikiResource' + pk + 'InheritPk'));
+			}
+			var val = o['classCanonicalName'];
+			if(vars.includes('classCanonicalName')) {
+				$('.inputCurrikiResource' + pk + 'ClassCanonicalName').each(function() {
+					if(val !== $(this).val())
+						$(this).val(val);
+				});
+				$('.varCurrikiResource' + pk + 'ClassCanonicalName').each(function() {
+					if(val !== $(this).text())
+						$(this).text(val);
+				});
+				addGlow($('.inputCurrikiResource' + pk + 'ClassCanonicalName'));
 			}
 		});
 	}
